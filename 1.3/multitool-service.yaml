@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: multitool-service
+spec:
+  selector:
+    app: multitool-app  # Связываем с подами deployment
+  ports:
+  - name: nginx-port
+    port: 80           # Внешний порт для nginx
+    targetPort: 80     # Порт контейнера nginx
+    protocol: TCP
+    
+  - name: multitool-port
+    port: 8080         # Внешний порт для multitool
+    targetPort: 8080   # Порт контейнера multitool
+    protocol: TCP
+    
+  type: ClusterIP      # Доступен только внутри кластера

@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-minimal
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-minimal
+  template:
+    metadata:
+      labels:
+        app: nginx-minimal
+    spec:
+      initContainers:
+      - name: simple-delay
+        image: busybox:1.35
+        command: ['sleep', '15']  # Просто спим 15 секунд
+      
+      containers:
+      - name: nginx
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
