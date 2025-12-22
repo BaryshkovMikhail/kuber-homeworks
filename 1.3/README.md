@@ -51,12 +51,15 @@
 ## Решение 2
 
 1.
-[nginx-init-simple.yaml](nginx-init-simple.yaml)
+[nginx-minimal.yaml](nginx-minimal.yaml)
 
 2.
 ![img7](img/img7.png) 
 ![img8](img/img8.png) 
 
 3.
+[service-minimal.yaml](service-minimal.yaml)
 ![img9](img/img9.png) 
+
+4.
 ![img10](img/img10.png) 
