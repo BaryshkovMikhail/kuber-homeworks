@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: data-exchange
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: data-exchange
+  template:
+    metadata:
+      labels:
+        app: data-exchange
+    spec:
+      containers:
+      - name: busybox-writer
+        image: busybox
+        command: ["/bin/sh", "-c"] 
+        args: ["while true; do echo $(date) >> /shared-data/log.txt; sleep 5; done"]
+        volumeMounts:
+        - name: shared-volume
+          mountPath: /shared-data
+      - name: multitool-reader
+        image: wbitt/network-multitool
+        command: ["/bin/sh", "-c"]
+        args: ["tail -f /shared-data/log.txt"]
+        volumeMounts:
+        - name: shared-volume
+          mountPath: /shared-data
+      volumes:
+      - name: shared-volume
+        emptyDir: {}
