@@ -1,0 +1,19 @@
+environment: development
+replicaCount: 1
+
+components:
+  frontend:
+    enabled: true
+    image:
+      repository: nginx
+      tag: 1.21-alpine
+  backend:
+    enabled: true
+    image:
+      repository: redis
+      tag: 6-alpine
+  database:
+    enabled: true
+    image:
+      repository: postgres
+      tag: 12-alpine

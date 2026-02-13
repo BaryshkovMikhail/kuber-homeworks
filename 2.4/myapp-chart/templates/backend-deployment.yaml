@@ -1,0 +1,31 @@
+{{- if .Values.components.backend.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-backend
+  labels:
+    app: {{ .Release.Name }}
+    component: backend
+    environment: {{ .Values.environment }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+      component: backend
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+        component: backend
+        environment: {{ .Values.environment }}
+    spec:
+      containers:
+      - name: backend
+        image: "{{ .Values.components.backend.image.repository }}:{{ .Values.components.backend.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.components.backend.port }}
+        resources:
+          {{- toYaml .Values.resources | nindent 10 }}
+{{- end }}

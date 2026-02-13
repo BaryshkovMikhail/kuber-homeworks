@@ -1,0 +1,19 @@
+environment: staging
+replicaCount: 2
+
+components:
+  frontend:
+    enabled: true
+    image:
+      repository: nginx
+      tag: 1.23-alpine
+  backend:
+    enabled: true
+    image:
+      repository: redis
+      tag: 7-alpine
+  database:
+    enabled: true
+    image:
+      repository: postgres
+      tag: 14-alpine

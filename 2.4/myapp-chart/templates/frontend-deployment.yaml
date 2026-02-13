@@ -1,0 +1,31 @@
+{{- if .Values.components.frontend.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-frontend
+  labels:
+    app: {{ .Release.Name }}
+    component: frontend
+    environment: {{ .Values.environment }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+      component: frontend
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+        component: frontend
+        environment: {{ .Values.environment }}
+    spec:
+      containers:
+      - name: frontend
+        image: "{{ .Values.components.frontend.image.repository }}:{{ .Values.components.frontend.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.components.frontend.port }}
+        resources:
+          {{- toYaml .Values.resources | nindent 10 }}
+{{- end }}
