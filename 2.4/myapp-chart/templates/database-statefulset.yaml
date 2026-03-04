@@ -1,0 +1,37 @@
+{{- if .Values.components.database.enabled }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}-database
+  labels:
+    app: {{ .Release.Name }}
+    component: database
+    environment: {{ .Values.environment }}
+spec:
+  serviceName: {{ .Release.Name }}-database
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+      component: database
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+        component: database
+        environment: {{ .Values.environment }}
+    spec:
+      containers:
+      - name: database
+        image: "{{ .Values.components.database.image.repository }}:{{ .Values.components.database.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.components.database.port }}
+        env:
+        - name: POSTGRES_PASSWORD
+          value: "password"
+        - name: PGDATA
+          value: "/tmp/pgdata"
+        resources:
+          {{- toYaml .Values.resources | nindent 10 }}
+{{- end }}

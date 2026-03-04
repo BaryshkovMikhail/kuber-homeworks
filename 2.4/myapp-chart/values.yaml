@@ -1,0 +1,53 @@
+# values.yaml
+# Общие настройки
+replicaCount: 2
+
+# Настройки образа
+image:
+  repository: nginx
+  tag: latest
+  pullPolicy: IfNotPresent
+
+# Настройки сервиса
+service:
+  type: ClusterIP
+  port: 80
+
+# Настройки окружения
+environment: production
+
+# Ресурсы
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi
+
+# Настройки для разных компонентов
+components:
+  frontend:
+    enabled: true
+    image:
+      repository: nginx
+      tag: alpine
+    port: 80
+    
+  backend:
+    enabled: true
+    image:
+      repository: redis
+      tag: alpine
+    port: 6379
+    
+  database:
+    enabled: true
+    type: statefulset
+    image:
+      repository: postgres
+      tag: 13-alpine
+    port: 5432
+    storage:
+      size: 1Gi
+      className: standard
