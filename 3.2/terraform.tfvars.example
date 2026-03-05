@@ -1,0 +1,4 @@
+# Переименуйте этот файл в terraform.tfvars и заполните своими данными
+yandex_token     = "y0__your_token_here"
+yandex_cloud_id  = "b1g8dhkoksraemsg21d1"
+yandex_folder_id = "b1grhpvr018trna19v2f"
