@@ -142,7 +142,7 @@ for ip in $WORKER_IPS; do
   echo "Date: $(date)" >> ~/k8s-logs/worker-setup.log
   
   # Запускаем скрипт и сохраняем вывод
-  ssh -o StrictHostKeyChecking=no yc-user@$ip "bash ~/install-k8s-tools.sh" 2>&1 | tee -a ~/k8s-logs/worker-setup.log
+  ssh -o StrictHostKeyChecking=no yc-user@$ip "bash ~/install-worker-fixed.sh " 2>&1 | tee -a ~/k8s-logs/worker-setup.log
   
   if [ ${PIPESTATUS[0]} -eq 0 ]; then
     echo "✅ Worker $ip setup completed successfully"
@@ -165,7 +165,7 @@ echo "All workers setup completed! Log saved to ~/k8s-logs/worker-setup.log"
 # Проверка, что скрипт скопировался на все ноды
 for ip in $WORKER_IPS; do
   echo "Checking $ip:"
-  ssh yc-user@$ip "ls -la ~/install-k8s-tools.sh"
+  ssh yc-user@$ip "ls -la ~/install-worker-fixed.sh "
   echo "---"
 done
 
